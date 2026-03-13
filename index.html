@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>马宇婷 · 设计作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --warm: #c8a96e;
+    --rust: #b05c3a;
+    --sage: #7a8c6e;
+    --mist: #e8e2d6;
+    --deep: #2d2520;
+    --gold: #d4a843;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Serif SC', serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--rust);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid var(--warm);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.18s ease;
+    opacity: 0.7;
+  }
+
+  /* Noise Texture Overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    padding: 24px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(245,240,232,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--rust); font-style: italic; }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.3s, color 0.3s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--rust); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 120px 60px 80px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 8vw, 120px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-name-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 2vw, 28px);
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.15em;
+    color: var(--warm);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .hero-desc {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--deep);
+    opacity: 0.75;
+    max-width: 400px;
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.1s forwards;
+  }
+  .stat { display: flex; flex-direction: column; gap: 4px; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--rust);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.5;
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--deep);
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(200,169,110,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(176,92,58,0.2) 0%, transparent 50%);
+  }
+  .hero-decorative {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 1.2s 1s forwards;
+  }
+  .hero-circle-outer {
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,110,0.3);
+    position: absolute;
+    animation: rotateSlow 30s linear infinite;
+  }
+  .hero-circle-inner {
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,110,0.15);
+    position: absolute;
+    animation: rotateSlow 20s linear infinite reverse;
+  }
+  .hero-text-ring {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--warm);
+    opacity: 0.5;
+    text-align: center;
+    position: absolute;
+    bottom: 80px;
+    right: 60px;
+    writing-mode: vertical-rl;
+  }
+  .hero-big-char {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 280px;
+    font-weight: 300;
+    color: rgba(200,169,110,0.08);
+    position: absolute;
+    line-height: 1;
+    user-select: none;
+  }
+  .hero-badge {
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--warm);
+    opacity: 0;
+    animation: fadeUp 0.8s 1.3s forwards;
+  }
+  .hero-badge::before {
+    content: '';
+    display: inline-block;
+    width: 30px; height: 1px;
+    background: var(--warm);
+    vertical-align: middle;
+    margin-right: 12px;
+  }
+
+  /* Section Common */
+  section { position: relative; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--rust), transparent);
+    opacity: 0.3;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--warm);
+  }
+
+  /* About / Education */
+  .about {
+    padding: 140px 60px;
+    background: var(--paper);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .about-left { position: sticky; top: 120px; }
+  .about-intro {
+    font-size: 16px;
+    line-height: 2;
+    color: var(--deep);
+    opacity: 0.8;
+    margin-top: 32px;
+  }
+
+  .edu-timeline { display: flex; flex-direction: column; gap: 0; }
+  .edu-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 40px;
+    padding: 48px 0;
+    border-bottom: 1px solid rgba(26,20,16,0.1);
+    position: relative;
+  }
+  .edu-item:first-child { border-top: 1px solid rgba(26,20,16,0.1); }
+  .edu-years {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--warm);
+    padding-top: 6px;
+    line-height: 1.6;
+  }
+  .edu-school {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .edu-degree {
+    font-size: 14px;
+    color: var(--rust);
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+  .edu-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    opacity: 0.45;
+    letter-spacing: 0.1em;
+  }
+  .edu-tag {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 14px;
+    border: 1px solid var(--warm);
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--warm);
+  }
+
+  /* Awards */
+  .awards {
+    padding: 140px 60px;
+    background: var(--deep);
+    color: var(--paper);
+  }
+  .awards .section-label { color: var(--gold); }
+  .awards .section-label::after { background: linear-gradient(to right, var(--gold), transparent); }
+  .awards .section-title { color: var(--paper); }
+  .awards .section-title em { color: var(--gold); }
+
+  .awards-featured {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 80px;
+    margin-bottom: 2px;
+  }
+  .award-card {
+    padding: 52px 48px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,168,67,0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: default;
+  }
+  .award-card:hover {
+    background: rgba(212,168,67,0.06);
+    border-color: rgba(212,168,67,0.3);
+    transform: translateY(-4px);
+  }
+  .award-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -20px; right: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    font-weight: 300;
+    color: rgba(212,168,67,0.05);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .award-level {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .award-level-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .award-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--paper);
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .award-work {
+    font-size: 14px;
+    color: var(--warm);
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .award-prize {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--paper);
+    opacity: 0.4;
+    letter-spacing: 0.1em;
+  }
+  .award-card.highlight {
+    background: linear-gradient(135deg, rgba(212,168,67,0.12), rgba(176,92,58,0.08));
+    border-color: rgba(212,168,67,0.25);
+    grid-column: span 2;
+    padding: 64px 60px;
+  }
+  .award-card.highlight .award-name { font-size: 32px; }
+
+  .awards-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 2px;
+  }
+  .award-mini {
+    padding: 32px 36px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(212,168,67,0.08);
+    transition: all 0.3s;
+  }
+  .award-mini:hover {
+    background: rgba(212,168,67,0.04);
+    border-color: rgba(212,168,67,0.2);
+  }
+  .award-mini-name {
+    font-size: 13px;
+    color: var(--paper);
+    opacity: 0.8;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .award-mini-work {
+    font-size: 12px;
+    color: var(--warm);
+    font-style: italic;
+    opacity: 0.8;
+  }
+  .award-mini-badge {
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    opacity: 0.6;
+  }
+
+  /* Projects / Works */
+  .works {
+    padding: 140px 60px;
+    background: var(--mist);
+  }
+  .works-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 80px;
+  }
+  a.work-card { text-decoration: none; color: white; }
+  a.skill-item { text-decoration: none; color: inherit; display: block; }
+  .work-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--ink);
+    aspect-ratio: 4/3;
+    cursor: default;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .work-card:hover { transform: scale(1.02); }
+  .work-card-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(26,20,16,0.92) 0%, transparent 60%);
+    color: white;
+  }
+  .work-card-bg {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.6s ease;
+  }
+  .work-card:hover .work-card-bg { transform: scale(1.06); }
+
+  /* Unique gradient backgrounds for each card */
+  .work-bg-1 { background: linear-gradient(135deg, #1a3a4a 0%, #0d2535 40%, #2d4a3e 100%); }
+  .work-bg-2 { background: linear-gradient(135deg, #3d2010 0%, #5c2d1a 50%, #8b4513 100%); }
+  .work-bg-3 { background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);  background-image: url("aimili-1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;}
+  .work-bg-4 { background: linear-gradient(135deg, #2d3520 0%, #3d4a2a 50%, #4a5530 100%); }
+
+  .work-float {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 100px;
+    font-weight: 300;
+    opacity: 0.07;
+    color: white;
+    top: 20px; right: 20px;
+    line-height: 1;
+  }
+  .work-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .work-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .work-sub {
+    font-size: 13px;
+    opacity: 0.6;
+    line-height: 1.5;
+  }
+  .work-award-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 5px 12px;
+    background: rgba(212,168,67,0.2);
+    border: 1px solid rgba(212,168,67,0.4);
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+  }
+  .works-right {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 32px;
+  }
+
+  /* Skills / Identity */
+  .identity {
+    padding: 140px 60px;
+    background: var(--paper);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 120px;
+    align-items: center;
+  }
+  .identity-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.5vw, 52px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--ink);
+    position: relative;
+    padding-left: 40px;
+  }
+  .identity-quote::before {
+    content: '"';
+    position: absolute;
+    left: 0; top: -20px;
+    font-size: 100px;
+    color: var(--warm);
+    opacity: 0.3;
+    line-height: 1;
+    font-style: normal;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .skill-item {
+    padding: 28px 32px;
+    background: var(--mist);
+    border: 1px solid rgba(26,20,16,0.08);
+    transition: all 0.3s;
+  }
+  .skill-item:hover { background: var(--ink); color: var(--paper); }
+  .skill-item:hover .skill-name { color: var(--paper); }
+  .skill-item:hover .skill-type { color: var(--warm); }
+  .skill-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 6px;
+    transition: color 0.3s;
+  }
+  .skill-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    transition: color 0.3s;
+  }
+
+  /* Contact / Footer */
+  .contact {
+    padding: 140px 60px;
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .contact::before {
+    content: '马宇婷';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 320px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.02);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .contact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 40px;
+  }
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 100px);
+    font-weight: 300;
+    color: var(--paper);
+    line-height: 1;
+    margin-bottom: 60px;
+  }
+  .contact-title em { color: var(--warm); font-style: italic; }
+
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-bottom: 80px;
+    flex-wrap: wrap;
+  }
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .contact-item-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm);
+    opacity: 0.6;
+  }
+  .contact-item-value {
+    font-size: 14px;
+    color: var(--paper);
+    opacity: 0.8;
+  }
+
+  footer {
+    background: var(--deep);
+    padding: 32px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--paper);
+    opacity: 0.25;
+  }
+
+  /* Scroll Indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s 2s forwards;
+    z-index: 10;
+  }
+  .scroll-hint span {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.4;
+  }
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--rust), transparent);
+    animation: scrollPulse 2s 2s infinite;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes rotateSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* Reveal Animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 20px 28px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 100px 28px 60px; }
+    .about { padding: 80px 28px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .about-left { position: static; }
+    .awards { padding: 80px 28px; }
+    .awards-featured { grid-template-columns: 1fr; }
+    .award-card.highlight { grid-column: span 1; }
+    .awards-list { grid-template-columns: 1fr; }
+    .works { padding: 80px 28px; }
+    .works-grid { grid-template-columns: 1fr; }
+    .works-right { grid-template-rows: auto; }
+    .identity { padding: 80px 28px; grid-template-columns: 1fr; gap: 48px; }
+    .contact { padding: 80px 28px; }
+    footer { padding: 24px 28px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-logo">马宇婷 <span>Studio</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">关于</a></li>
+    <li><a href="#awards">荣誉</a></li>
+    <li><a href="#works">作品</a></li>
+    <li><a href="#contact">联系</a></li>
+  </ul>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Portfolio · 2019 – 2026</div>
+    <h1 class="hero-name">马宇婷</h1>
+    <div class="hero-name-en">Ma Yuting · Designer</div>
+    <p class="hero-desc">
+      设计学学术硕士在读，专注于视觉传达、IP形象设计与文创产品开发。以青岛为灵感原点，用设计讲述城市与自然的故事。
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">13+</div>
+        <div class="stat-label">获奖项目</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">国家级奖项</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">7</div>
+        <div class="stat-label">省级荣誉</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-decorative">
+      <div class="hero-big-char">设</div>
+      <div class="hero-circle-outer"></div>
+      <div class="hero-circle-inner"></div>
+    </div>
+    <div class="hero-text-ring">VISUAL DESIGN · IP DESIGN · CREATIVE WORKS · 2024 ·</div>
+    <div class="hero-badge">青岛大学 · 设计学 · 硕士研究生</div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- About / Education -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">教育<br><em>经历</em></h2>
+      <p class="about-intro">
+        热爱设计的探索者，深耕于品牌视觉、IP形象与文化创意领域。本科扎根环境艺术，研究生转向设计学，以跨学科视野构建独特的设计语言。
+      </p>
+    </div>
+    <div class="edu-timeline">
+      <div class="edu-item reveal reveal-delay-1">
+        <div class="edu-years">2023<br>—<br>2026</div>
+        <div>
+          <div class="edu-school">青岛大学</div>
+          <div class="edu-degree">设计学 · 学术硕士</div>
+          <div class="edu-detail">QINGDAO UNIVERSITY · M.A. DESIGN</div>
+          <div class="edu-tag">在读 · 研究生</div>
+        </div>
+      </div>
+      <div class="edu-item reveal reveal-delay-2">
+        <div class="edu-years">2019<br>—<br>2023</div>
+        <div>
+          <div class="edu-school">浙江农林大学</div>
+          <div class="edu-degree">环境艺术设计 · 学士</div>
+          <div class="edu-detail">ZAFU · B.A. ENVIRONMENTAL ART DESIGN</div>
+          <div class="edu-tag">学士学位</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Awards -->
+<section class="awards" id="awards">
+  <div class="section-label reveal">Awards & Honors</div>
+  <h2 class="section-title reveal">荣誉 <em>获奖</em></h2>
+
+  <!-- Featured Awards -->
+  <div class="awards-featured">
+
+    <!-- TOP HIGHLIGHT -->
+    <div class="award-card highlight reveal" data-num="01">
+      <div class="award-level"><div class="award-level-dot"></div>国家级 · 最高荣誉</div>
+      <div class="award-name">第十六届蓝桥杯全国软件和信息技术专业人才大赛<br>视觉艺术设计赛 · 文创设计</div>
+      <div class="award-work">《深海秘境之旅》</div>
+      <div class="award-prize">国赛二等奖 · 第二位</div>
+    </div>
+
+    <div class="award-card reveal reveal-delay-1" data-num="02">
+      <div class="award-level"><div class="award-level-dot"></div>国家级</div>
+      <div class="award-name">第二届中国研究生<br>"美丽中国"创新设计大赛</div>
+      <div class="award-work">《里院春韵、糖球嘉年华》</div>
+      <div class="award-prize">国赛三等奖 · 第二位</div>
+    </div>
+
+    <div class="award-card reveal reveal-delay-2" data-num="03">
+      <div class="award-level"><div class="award-level-dot"></div>国家级</div>
+      <div class="award-name">美丽中国<br>国赛</div>
+      <div class="award-work">《醉美青岛，为之倾倒》</div>
+      <div class="award-prize">优胜奖 · 第三位</div>
+    </div>
+
+  </div>
+
+  <!-- More Awards List -->
+  <div class="awards-list">
+    <div class="award-mini reveal reveal-delay-1">
+      <div class="award-mini-name">第九届米兰设计周中国高校设计学科师生优秀作品展</div>
+      <div class="award-mini-work">《海韵糖潮中山盛景》</div>
+      <div class="award-mini-badge">省一 · 第二位</div>
+    </div>
+    <div class="award-mini reveal reveal-delay-2">
+      <div class="award-mini-name">第十三届NCDA未来设计师全国高校数字艺术设计大赛</div>
+      <div class="award-mini-work">《麦麦——青岛小麦岛景区IP形象设计》</div>
+      <div class="award-mini-badge">山东赛区二等奖</div>
+    </div>
+    <div class="award-mini reveal reveal-delay-3">
+      <div class="award-mini-name">青岛大学第三届研究生创新成果展</div>
+      <div class="award-mini-work">《王哥庄山海礼》</div>
+      <div class="award-mini-badge">优秀实践创新成果奖 · 首位</div>
+    </div>
+    <div class="award-mini reveal reveal-delay-1">
+      <div class="award-mini-name">米兰设计周中国高校设计学科师生优秀作品展</div>
+      <div class="award-mini-work">《爱米粒牙线IP形象插画设计》</div>
+      <div class="award-mini-badge">山东赛区二等奖 · 第三位</div>
+    </div>
+    <div class="award-mini reveal reveal-delay-2">
+      <div class="award-mini-name">第九届华灿杯"两岸新锐设计大赛"</div>
+      <div class="award-mini-work">《四季皆宜 青岛文旅丝巾及文创制作》</div>
+      <div class="award-mini-badge">省级二等奖 · 第三位</div>
+    </div>
+    <div class="award-mini reveal reveal-delay-3">
+      <div class="award-mini-name">学业奖学金</div>
+      <div class="award-mini-work">2023–2024 / 2024–2025 学年</div>
+      <div class="award-mini-badge">二等奖学金 · 连续两年</div>
+    </div>
+  </div>
+</section>
+
+<!-- Creative Works -->
+<section class="works" id="works">
+  <div class="section-label reveal">Selected Works</div>
+  <h2 class="section-title reveal">精选<br><em>作品</em></h2>
+
+  <div class="works-grid">
+
+    <a href="maidao.html" class="work-card reveal">
+      <div class="work-card-bg" style="background-image:url('https://i.postimg.cc/fypWJp9k/maidao-cover.png');background-size:cover;background-position:center;"></div>
+      <div class="work-float">麦</div>
+      <div class="work-card-inner">
+        <div class="work-tag">毕业设计 · 2025</div>
+        <div class="work-title">毕业设计·麦岛站空间视觉设计方案</div>
+        <div class="work-sub">青岛地铁麦岛站地下空间视觉设计<br>涵盖橱窗设计、公共艺术、导视系统、IP形象</div>
+        <div class="work-award-badge">🏅 NCDA 山东赛区二等奖</div>
+      </div>
+    </a>
+
+    <a href="branding.html" class="work-card reveal reveal-delay-1">
+      <div class="work-card-bg" style="background-image:url('https://i.postimg.cc/SsZxpJQm/ji-yu-er-shi-si-jie-qi-de-qing-yin-shi-ping-tai-ce-hua-le-shi-yan-she-00.png');background-size:120%;background-position:left bottom;"></div>
+      <div class="work-float">乐</div>
+      <div class="work-card-inner">
+        <div class="work-tag">品牌设计 · 2024</div>
+        <div class="work-title">乐食研社轻饮食平台品牌构建</div>
+        <div class="work-sub">基于二十四节气的轻饮食平台策划<br>品牌视觉体系与推广设计</div>
+      </div>
+    </a>
+
+    <a href="lijie.html" class="work-card reveal reveal-delay-2" style="grid-column: span 2;">
+      <div class="work-card-bg" style="background-image:url('https://i.postimg.cc/Bvm0jkrY/li-jie-00.png');background-size:cover;background-position:center;"></div>
+      <div class="work-float">结</div>
+      <div class="work-card-inner">
+        <div class="work-tag">品牌设计 · 2024</div>
+        <div class="work-title">礼·结——基于文化传播视域下的中国结品牌设计及推广实践</div>
+        <div class="work-sub">中国结文化品牌设计与推广</div>
+        <div class="work-award-badge">🏅 郯城高层次人才设计大赛一等奖</div>
+      </div>
+    </a>
+
+    <a href="aimili.html" class="work-card reveal reveal-delay-3" style="grid-column: span 2;">
+      <div class="work-card-bg" style="background-image:url('https://i.postimg.cc/j2kvpQJT/aimili-cover.jpg');background-size:cover;background-position:center;"></div>
+      <div class="work-float">爱</div>
+      <div class="work-card-inner">
+        <div class="work-tag">IP设计 · 2023</div>
+        <div class="work-title">爱米粒牙线品牌IP形象设计及推广</div>
+        <div class="work-sub">为口腔护理品牌打造亲和力十足的IP形象<br>涵盖角色设定、表情包开发及线上线下推广视觉</div>
+        <div class="work-award-badge">🏅 米兰设计周山东赛区二等奖</div>
+      </div>
+    </a>
+
+    <a href="xiangjian.html" class="work-card reveal reveal-delay-4" style="grid-column: span 2;">
+      <div class="work-card-bg" style="background-image:url('https://i.postimg.cc/DfJSKPGR/xiang-jian-cun-lu-you-fang-an-ce-hua-jia-shui-yin-00.png');background-size:cover;background-position:center;"></div>
+      <div class="work-float">村</div>
+      <div class="work-card-inner">
+        <div class="work-tag">景观设计 · 2023</div>
+        <div class="work-title">相见村旅游景观策划设计方案</div>
+        <div class="work-sub">乡村旅游景观规划与设计</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- Identity / Skills -->
+<section class="identity">
+  <div class="reveal">
+    <p class="identity-quote">
+      用设计联结自然与人文，<br>将青岛的海风与故事，<br>转化为可被感知的视觉语言。
+    </p>
+  </div>
+  <div>
+    <div class="section-label reveal">Design Skills</div>
+    <div class="skills-grid">
+      <a href="visual.html" class="skill-item reveal reveal-delay-1">
+        <div class="skill-name">视觉传达</div>
+        <div class="skill-type">Visual Design</div>
+      </a>
+      <a href="ip-design-page.html" class="skill-item reveal reveal-delay-2">
+        <div class="skill-name">IP形象设计</div>
+        <div class="skill-type">Character Design</div>
+      </a>
+      <a href="illustration.html" class="skill-item reveal reveal-delay-3">
+        <div class="skill-name">插画创作</div>
+        <div class="skill-type">Illustration</div>
+      </a>
+      <a href="wenchuang.html" class="skill-item reveal reveal-delay-4">
+        <div class="skill-name">文创产品</div>
+        <div class="skill-type">Cultural Creative</div>
+      </a>
+      <a href="poster.html" class="skill-item reveal reveal-delay-1">
+        <div class="skill-name">海报设计</div>
+        <div class="skill-type">Poster Design</div>
+      </a>
+      <a href="branding.html" class="skill-item reveal reveal-delay-2">
+        <div class="skill-name">品牌设计</div>
+        <div class="skill-type">Branding</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="contact-label reveal">Get In Touch</div>
+  <h2 class="contact-title reveal">期待与你<br><em>创造</em>美好</h2>
+  <div class="contact-info reveal">
+    <div class="contact-item">
+      <div class="contact-item-label">院校</div>
+      <div class="contact-item-value">青岛大学 · 设计学院</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">专业</div>
+      <div class="contact-item-value">设计学 · 学术硕士</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">方向</div>
+      <div class="contact-item-value">视觉传达 · IP设计 · 文创</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 马宇婷 · Ma Yuting Portfolio · All Rights Reserved</p>
+  <p>青岛大学 · 设计学院 · 研究生</p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Hover cursor effect
+  document.querySelectorAll('a, .award-card, .work-card, .skill-item, .award-mini').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
+      ring.style.transform = 'translate(-50%, -50%) scale(1.5)';
+      ring.style.borderColor = 'var(--rust)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      ring.style.transform = 'translate(-50%, -50%) scale(1)';
+      ring.style.borderColor = 'var(--warm)';
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
